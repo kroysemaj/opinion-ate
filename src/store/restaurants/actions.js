@@ -1,1 +1,3 @@
-export const loadRestaurants = () => {};
+const noop = () => {};
+
+export const loadRestaurants = () => noop;
