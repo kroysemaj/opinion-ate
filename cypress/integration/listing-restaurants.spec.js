@@ -1,4 +1,4 @@
-const API_KEY = "v4JijKvrA2tZaATyJEKFIGZSFONwCcb4";
+import {API_KEY} from "../../src/api";
 
 describe("Listing Restaurants", () => {
   it("shows restaurants from the server", () => {
