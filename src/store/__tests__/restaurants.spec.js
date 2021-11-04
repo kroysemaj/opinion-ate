@@ -5,7 +5,7 @@ import {loadRestaurants} from "../restaurants/actions";
 
 describe("Restaurants", () => {
   describe("restaurant action", () => {
-    it("store the restaurants", () => {
+    it("store the restaurants", async () => {
       const records = [
         {id: 1, name: "Sushi Place"},
         {id: 2, name: "Pizza Place"},
