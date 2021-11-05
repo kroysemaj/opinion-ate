@@ -10,4 +10,13 @@ const records = (state = [], action) => {
   }
 };
 
-export default combineReducers({records});
+const loading = (state = true, action) => {
+  switch (action.type) {
+    case STORE_RESTAURANTS:
+      return false;
+    default:
+      return state;
+  }
+};
+
+export default combineReducers({records, loading});
