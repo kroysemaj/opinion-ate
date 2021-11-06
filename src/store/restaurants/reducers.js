@@ -1,5 +1,5 @@
 import {combineReducers} from "redux";
-import {STORE_RESTAURANTS} from "./actions";
+import {STORE_RESTAURANTS, START_LOADING} from "./actions";
 
 const records = (state = [], action) => {
   switch (action.type) {
@@ -10,10 +10,12 @@ const records = (state = [], action) => {
   }
 };
 
-const loading = (state = true, action) => {
+const loading = (state = false, action) => {
   switch (action.type) {
     case STORE_RESTAURANTS:
       return false;
+    case START_LOADING:
+      return true;
     default:
       return state;
   }
