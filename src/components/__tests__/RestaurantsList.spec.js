@@ -47,4 +47,17 @@ describe("Restaurant List", () => {
       expect(queryByTestId("loading-indicator")).toBeNull();
     });
   });
+  describe("When loading fail", () => {
+    it("shows an error message", () => {
+      renderWithProps({error: true});
+      const {queryByText} = subject;
+      expect(queryByText("An error occurred, what'd you do!?")).not.toBeNull();
+    });
+
+    it("Does not show an error message", () => {
+      renderWithProps({error: false});
+      const {queryByText} = subject;
+      expect(queryByText("An error occurred, what'd you do!?")).toBeNull();
+    });
+  });
 });
