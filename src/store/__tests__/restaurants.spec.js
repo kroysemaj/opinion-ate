@@ -4,6 +4,19 @@ import restaurantReducer from "../restaurants/reducers";
 import {loadRestaurants} from "../restaurants/actions";
 
 describe("Restaurants", () => {
+  describe("initially", () => {
+    it("does not have the loading flag set", () => {
+      const initialState = {};
+
+      const store = createStore(
+        restaurantReducer,
+        initialState,
+        applyMiddleware(thunk),
+      );
+
+      expect(store.getState().loading).toEqual(false);
+    });
+  });
   describe("when loading", () => {
     const records = [
       {id: 1, name: "Sushi Place"},
@@ -47,24 +60,10 @@ describe("Restaurants", () => {
 
       store.dispatch(loadRestaurants());
 
-      console.log(store.getState());
       expect(store.getState().loading).toEqual(true);
     });
 
     it("clears a loading flag", () => {
-      expect(store.getState().loading).toEqual(false);
-    });
-  });
-  describe("initially", () => {
-    it("does not have the loading flag set", () => {
-      const initialState = {};
-
-      const store = createStore(
-        restaurantReducer,
-        initialState,
-        applyMiddleware(thunk),
-      );
-
       expect(store.getState().loading).toEqual(false);
     });
   });
