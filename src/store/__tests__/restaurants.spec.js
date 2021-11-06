@@ -67,4 +67,56 @@ describe("Restaurants", () => {
       expect(store.getState().loading).toEqual(false);
     });
   });
+  describe("on error", () => {
+    it("sets an error flag", async () => {
+      const api = {
+        loadRestaurants: () => Promise.reject("Error"),
+      };
+
+      const initialState = {};
+
+      const store = createStore(
+        restaurantReducer,
+        initialState,
+        applyMiddleware(thunk.withExtraArgument(api)),
+      );
+
+      await store.dispatch(loadRestaurants());
+
+      expect(store.getState().error).toEqual(true);
+    });
+    it("clears the error flag", async () => {
+      const api = {
+        loadRestaurants: () => Promise.resolve("no error"),
+      };
+
+      const initialState = {};
+
+      const store = createStore(
+        restaurantReducer,
+        initialState,
+        applyMiddleware(thunk.withExtraArgument(api)),
+      );
+
+      await store.dispatch(loadRestaurants());
+
+      expect(store.getState().error).toEqual(false);
+    });
+    it("clears the loading flag", async () => {
+      const api = {
+        loadRestaurants: () => Promise.resolve("no error"),
+      };
+
+      const initialState = {};
+
+      const store = createStore(
+        restaurantReducer,
+        initialState,
+        applyMiddleware(thunk.withExtraArgument(api)),
+      );
+
+      await store.dispatch(loadRestaurants());
+      expect(store.getState().loading).toEqual(false);
+    });
+  });
 });

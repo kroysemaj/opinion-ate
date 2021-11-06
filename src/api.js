@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export const API_KEY = "v4JijKvrA2tZaATyJEKFIGZSFONwCcb4";
+// export const API_KEY = "yourmom";
 
 const client = axios.create({
   baseURL: `http://outside-in-dev-api.herokuapp.com/${API_KEY}`,
