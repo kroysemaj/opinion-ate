@@ -25,7 +25,7 @@ describe("Restaurants", () => {
         applyMiddleware(thunk.withExtraArgument(api)),
       );
 
-      return store.dispatch(loadRestaurants());
+      store.dispatch(loadRestaurants());
     });
 
     it("store the restaurants", () => {
@@ -33,6 +33,20 @@ describe("Restaurants", () => {
     });
 
     it("sets a loading flag", () => {
+      const api = {
+        loadRestaurants: () => new Promise(() => {}),
+      };
+
+      const initialState = {};
+
+      store = createStore(
+        restaurantReducer,
+        initialState,
+        applyMiddleware(thunk.withExtraArgument(api)),
+      );
+
+      store.dispatch(loadRestaurants());
+
       console.log(store.getState());
       expect(store.getState().loading).toEqual(true);
     });
