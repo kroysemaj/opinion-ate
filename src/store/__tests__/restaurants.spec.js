@@ -1,7 +1,7 @@
 import {createStore, applyMiddleware} from "redux";
 import thunk from "redux-thunk";
 import restaurantReducer from "../restaurants/reducers";
-import {loadRestaurants} from "../restaurants/actions";
+import {loadRestaurants, createRestaurant} from "../restaurants/actions";
 
 describe("Restaurants", () => {
   describe("initially", () => {
@@ -17,6 +17,7 @@ describe("Restaurants", () => {
       expect(store.getState().loading).toEqual(false);
     });
   });
+
   describe("when loading", () => {
     const records = [
       {id: 1, name: "Sushi Place"},
@@ -67,6 +68,53 @@ describe("Restaurants", () => {
       expect(store.getState().loading).toEqual(false);
     });
   });
+
+  describe("Create restaurant action", () => {
+    const newRestaurantName = "Burger Place";
+    const existingRestaurant = {
+      id: 1,
+      name: "Pizza Place",
+    };
+    const responseRestaurant = {id: 2, name: "Burger Place"};
+
+    let api;
+    let store;
+
+    beforeEach(() => {
+      api = {
+        createRestaurant: jest.fn().mockName("createRestaurant"),
+      };
+
+      const initialState = {records: [existingRestaurant]};
+
+      store = createStore(
+        restaurantReducer,
+        initialState,
+        applyMiddleware(thunk.withExtraArgument(api)),
+      );
+    });
+
+    it("saves the restaurant to the server", () => {
+      api.createRestaurant.mockResolvedValue(responseRestaurant);
+      store.dispatch(createRestaurant(newRestaurantName));
+      expect(api.createRestaurant).toHaveBeenCalledWith(newRestaurantName);
+    });
+
+    describe("when save succeeds", () => {
+      beforeEach(() => {
+        api.createRestaurant.mockResolvedValue(responseRestaurant);
+        store.dispatch(createRestaurant(newRestaurantName));
+      });
+
+      it("adds the returned restaurant to the store", () => {
+        expect(store.getState().records).toEqual([
+          existingRestaurant,
+          responseRestaurant,
+        ]);
+      });
+    });
+  });
+
   describe("on error", () => {
     it("sets an error flag", async () => {
       const api = {

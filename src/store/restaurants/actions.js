@@ -1,6 +1,7 @@
 export const STORE_RESTAURANTS = "STORE_RESTAURANTS";
 export const START_LOADING = "START_LOADING";
 export const SET_ERROR = "SET_ERROR";
+export const ADD_RESTAURANT = "ADD_RESTAURANT";
 
 export const loadRestaurants = () => (dispatch, getState, api) => {
   dispatch(startLoading());
@@ -15,11 +16,21 @@ export const loadRestaurants = () => (dispatch, getState, api) => {
 const startLoading = () => ({type: START_LOADING});
 
 const setError = () => {
-  console.log("error!");
   return {type: SET_ERROR};
 };
 
 const storeRestaurants = records => ({
   type: STORE_RESTAURANTS,
   records,
+});
+
+export const createRestaurant = name => (dispatch, getState, api) => {
+  api.createRestaurant(name).then(record => {
+    dispatch(addRestaurant(record));
+  });
+};
+
+const addRestaurant = record => ({
+  type: ADD_RESTAURANT,
+  record,
 });
