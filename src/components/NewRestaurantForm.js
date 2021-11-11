@@ -9,7 +9,7 @@ export const NewRestaurantForm = ({createRestaurant}) => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    createRestaurant(name);
+    createRestaurant(name).then(setName(""));
   };
 
   return (

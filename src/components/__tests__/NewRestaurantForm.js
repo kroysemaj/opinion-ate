@@ -15,6 +15,7 @@ describe("New Restaurant Form", () => {
 
   describe("when filled in", () => {
     beforeEach(async () => {
+      createRestaurant.mockResolvedValue();
       const {getByPlaceholderText, getByTestId} = subject;
 
       await userEvent.type(
@@ -26,6 +27,10 @@ describe("New Restaurant Form", () => {
 
     it("calls createRestaurant with the name", () => {
       expect(createRestaurant).toHaveBeenCalledWith(restaurantName);
+    });
+    it("clears the form after save", () => {
+      const {getByPlaceholderText} = subject;
+      expect(getByPlaceholderText("Add Restaurant").value).toEqual("");
     });
   });
 });
