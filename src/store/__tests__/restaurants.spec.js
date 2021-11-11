@@ -117,6 +117,14 @@ describe("Restaurants", () => {
         return expect(promise).resolves.toBeUndefined();
       });
     });
+
+    xdescribe("when saving fails", () => {
+      it("rejects", () => {
+        api.createRestaurant.mockRejectedValue();
+        promise = store.dispatch(createRestaurant(newRestaurantName));
+        return expect(promise).rejects.toBeUndefined();
+      });
+    });
   });
 
   describe("on error", () => {
