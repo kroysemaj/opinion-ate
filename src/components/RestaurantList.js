@@ -4,6 +4,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Alert from "@material-ui/lab/Alert";
+import Box from "@material-ui/core/Box";
 import {connect} from "react-redux";
 import {loadRestaurants} from "../store/restaurants/actions";
 
@@ -21,7 +22,9 @@ export const RestaurantList = ({
       {error && (
         <Alert severity="error">An error occurred, what'd you do!?</Alert>
       )}
-      {loading && <CircularProgress data-testid="loading-indicator" />}
+      <Box display="flex" justifyContent="center">
+        {loading && <CircularProgress data-testid="loading-indicator" />}
+      </Box>
       <List>
         {restaurants.map(restaurant => (
           <ListItem key={restaurant.id}>
